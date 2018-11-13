@@ -1,33 +1,61 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-// import {Button, Icon, Row, Col} from 'react-materialize'
-// import Col from 'react-materialize/lib/Col'
-// import Row from 'react-materialize/lib/Row'
-import Table from 'react-materialize/lib/Table';
-// import Button from 'react-materialize/lib/Button';
+import React, { Component } from 'react'; 
+import './App.css'; 
+import Table from 'react-materialize/lib/Table'; 
 import Icon from 'react-materialize/lib/Icon';
 import Footer from 'react-materialize/lib/Footer';
 import Navbar from 'react-materialize/lib/Navbar';
 import NavItem from 'react-materialize/lib/NavItem';
 import Pagination from 'react-materialize/lib/Pagination';
+// import config from './config.json';
+// import * as firebase from 'firebase';
+import firebase from 'firebase/app';
+import { authFunctions } from './firebase';
+import {auth} from './firebase/firebase';
+// firebase.initializeApp(config)
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+  
+    }
+
+  }
+  signIn(){
+    var provider = new firebase.auth.GoogleAuthProvider();
+    authFunctions.doSignInWithGoogle(provider)
+      .then(result => {
+        console.log(result)
+      })
+      .catch(err =>{
+        console.log(err)
+      })
+  }
+  componentWillMount(){
+    console.log("entre al Will") 
+    auth.onAuthStateChanged(user => {
+      console.log(user.displayName)
+      
+      this.setState({
+        displayName: user.displayName
+      })
+      console.log(this.state)
+    })
+  }
   render() {
+    const { displayName} = this.state
+    console.log(this.state)
     return (
       <div className="">  
         <Navbar brand='logo' right className="navbar" >
           <NavItem onClick={() => console.log('test click')}>Getting started</NavItem>
           <NavItem href='components.html'>Components</NavItem>
         </Navbar>
-        <div className="container">
-          {/* <h1>Prueba</h1> */}
-          {/* <h2>Prueba</h2> */}
-          {/* <h3>Prueba</h3> */}
-          <h4>Prueba</h4>
-          <p> Texto de Prueba para verificar que tenga una descripción</p>
-          {/* <h5>Prueba</h5> */}
-          {/* <h6>Prueba</h6> */}
+        <div className="container"> 
+        {/* {console.log(this.state)} */}
+          <h4>Hola: {displayName}</h4>
+          <p> Texto de Prueba para verificar que tenga una descripción</p> 
+          <button onClick={this.signIn}>Iniciar sesion con Google</button>
           <Table striped={true}>
             <thead>
               <tr>
@@ -37,7 +65,6 @@ class App extends Component {
                 <th data-field="acciones">Acciones</th>
               </tr>
             </thead>
-
             <tbody>
               <tr>
                 <td>1</td>
@@ -47,10 +74,8 @@ class App extends Component {
                 <Icon>visibility</Icon>
                 <Icon>create</Icon>
                 <Icon>delete</Icon>
-
                 </td>
               </tr>
-              
             </tbody>
           </Table>
           <Pagination items={10} activePage={2} maxButtons={8} />
