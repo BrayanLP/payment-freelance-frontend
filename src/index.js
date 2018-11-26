@@ -16,7 +16,7 @@ const store = init({
 const history = createHistory();
   
 ReactDOM.render(
-<Provider store={store}>
+  <Provider store={store}>
     <Router history={history}>
       <App />
     </Router>
