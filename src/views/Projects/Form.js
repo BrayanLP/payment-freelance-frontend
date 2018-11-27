@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Row from 'react-materialize/lib/Row';
-import Input from 'react-materialize/lib/Input';
+
 import Button from 'react-materialize/lib/Button';
+import InputValidator from '../../components/InputValidator/';
+import { ValidatorForm } from 'react-form-validator-core';
 
 class ProjectFrom extends Component {
     constructor(props ){
@@ -34,13 +36,55 @@ class ProjectFrom extends Component {
                     Crear Proyecto
                 </h1>
                 <Row>
-                    <Input onChange={this.handleChange} name="name" s={6} label="Nombre proyecto" value={this.state.form.name? this.state.form.name: ''}/>
-                    <Input onChange={this.handleChange} name="price" type="number" s={6} label="Precio" value={this.state.form.price? this.state.form.price: ''}/> 
-                    <Input onChange={this.handleChange} name="adelanto" type="number" s={6} label="Adelanto" value={this.state.form.adelanto? this.state.form.adelanto: ''}/>
-                    <Input onChange={this.handleChange} name="contacto" s={6} label="Contacto" value={this.state.form.contacto? this.state.form.contacto: ''}/>
-                    <Input onChange={this.handleChange} s={6} label="Fecha Inicio" name='start_date' type='date' value={this.state.form.start_date? this.state.form.start_date: ''}/>
-                    <Input onChange={this.handleChange} s={6} label="Fecha Fin" name='end_date' type='date' value={this.state.form.end_date? this.state.form.end_date: ''}/> 
-                    <button className="btn btn-waves " type="submit" onClick={(e) => this.handleSubmit(e)}>Crear</button> 
+                <ValidatorForm
+                    ref="form"
+                    onSubmit={this.handleSubmit} >
+                    <InputValidator 
+                        onChange={this.handleChange} 
+                        name="name" 
+                        s={6} 
+                        label="Nombre proyecto" 
+                        value={this.state.form.name? this.state.form.name: ''} 
+                        validators={['required']}
+                        errorMessages={['this field is required']}
+                    />
+                    <InputValidator 
+                        onChange={this.handleChange} 
+                        name="price" 
+                        type="number" 
+                        s={6} 
+                        label="Precio" 
+                        value={this.state.form.price? this.state.form.price: ''}/> 
+                    <InputValidator 
+                        onChange={this.handleChange} 
+                        name="adelanto" 
+                        type="number" 
+                        s={6} 
+                        label="Adelanto" 
+                        value={this.state.form.adelanto? this.state.form.adelanto: ''}/>
+                    <InputValidator 
+                        onChange={this.handleChange} 
+                        name="contacto" 
+                        s={6} 
+                        label="Contacto" 
+                        value={this.state.form.contacto? this.state.form.contacto: ''}/>
+                    <InputValidator 
+                        onChange={this.handleChange} 
+                        s={6} 
+                        label="Fecha Inicio" 
+                        name='start_date' 
+                        type='date' 
+                        value={this.state.form.start_date? this.state.form.start_date: ''}/>
+                    
+                    <InputValidator 
+                        onChange={this.handleChange} 
+                        s={6} 
+                        label="Fecha Fin" 
+                        name='end_date' 
+                        type='date' 
+                        value={this.state.form.end_date? this.state.form.end_date: ''}/> 
+                    <button className="btn btn-waves " type="submit" >Crear</button> 
+                    </ValidatorForm>
                 </Row>
             </div>
         );
