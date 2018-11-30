@@ -1,20 +1,29 @@
 import React from 'react';
 import Input from 'react-materialize/lib/Input';
- 
+
 import { ValidatorComponent } from 'react-form-validator-core';
+    const style ={
+        color: 'red',
+        position: 'absolute',
+        bottom: '-3px',
+        fontWeight: 100,
+        fontSize: '10px'
+    }
 class InputValidator extends ValidatorComponent {
  
     render() {
         const { errorMessages, validators, requiredError, validatorListener, ...rest } = this.props;
  
         return (
-            <div>
+            <React.Fragment>
                 <Input
                     {...rest}
                     ref={(r) => { this.input = r; }}
+                    children={
+                        this.errorText()
+                    }
                 />
-                {this.errorText()}
-            </div>
+            </React.Fragment>
         );
     }
  
@@ -25,10 +34,7 @@ class InputValidator extends ValidatorComponent {
             return null;
         }
  
-        return (
-            <div style={{ color: 'red' }}>
-                {this.getErrorMessage()}
-            </div>
+        return ( <React.Fragment><span style={style}>{this.getErrorMessage()}</span></React.Fragment>
         );
     }
 }

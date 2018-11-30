@@ -13,8 +13,17 @@ export default {
     },
     effects: dispatch => ({
         async fetchData() {
-            db.ref('proyectos').on('value', (snapshot) => {
-                this.list(Object.values(snapshot.val()),'projects')
+            db.ref('proyectos').on('value', (snapshot, index) => {  
+                const  data =snapshot.val(); 
+                console.log(data)
+                if(data){
+                    const result = Object.keys(data).map( (i) => { 
+                        data[i].id = i;
+                        return data[i]
+                    })  
+
+                    this.list(result ,'projects')
+                }
             })
         //     info.url =  info.endpoint;
         //     get(info)

@@ -10,18 +10,27 @@ import Button from 'react-materialize/lib/Button';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
+import { firebase } from '../../firebase/';
 class ProjectList extends Component {
+    constructor(props){
+        super(props)
+        this.handleDelete = this.handleDelete.bind(this)
+    }
     componentWillMount(){
         this.props.fetchProject();
+    }
+    handleDelete = (id) =>{
+        console.log(id)
+        firebase.db.ref(`/proyectos/${id}`).remove()
     }
     render() {
         const { projects } = this.props
         console.log(projects)
         return (
             <div>
-                <h1>
+                <h2>
                     Listado Proyecto
-                </h1>
+                </h2>
                 <Link className={`btn waves-effect waves-light`} to={'proyectos/crear'}>Crear</Link>
                 <Table striped={true}>
                 <thead>
@@ -38,11 +47,12 @@ class ProjectList extends Component {
                     <tr key={index + 1}>
                         <td>{index + 1}</td>
                         <td>{res.name}</td>
-                        <td>{res.price}</td>
+                        <td>{`S/ ${res.price - res.adelanto}.00`}</td>
                         <td>
-                        <Icon>visibility</Icon>
-                        <Icon>create</Icon>
-                        <Icon>delete</Icon>
+                        {/* <Icon>visibility</Icon> */}
+                        <Link to={`${res.id}/edit`}><Icon>create</Icon></Link>
+                        <a href="#!" onClick={(e) => this.handleDelete(res.id)}><Icon>delete</Icon></a>
+                        {/* <Link onClick={this.handleDelete(res.id)}><Icon>delete</Icon></Link> */}
                         </td>
                     </tr>
                     )
