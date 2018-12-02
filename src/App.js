@@ -16,6 +16,7 @@ import {
 // firebase.initializeApp(config)
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import HomeComponent from './views/Home';
+import routes from './routes';
 
 
 class App extends Component {
@@ -65,10 +66,10 @@ class App extends Component {
           <div>
             <Navbar brand='logo' right className="navbar" > 
               <li>
-                <Link to={`/`}>Inicio</Link>
+                <Link to={routes.home}>Inicio</Link>
               </li>
               <li>
-                <Link to={`/proyectos`}>Proyectos</Link>
+                <Link to={routes.project}>Proyectos</Link>
               </li>
               {/* <li>
                 <Link to={`/proyectos/crear`}>Proyectos</Link>
@@ -78,9 +79,10 @@ class App extends Component {
             <div className="container">  
               {/* <h4>Hola: {displayName}</h4>  */}
               {/* <button onClick={this.signIn}>Iniciar sesion con Google</button> */}
-              <Route exact path="/" component={HomeComponent} /> 
-              <Route exact path="/proyectos" component={ProjectList} /> 
-              <Route path="/proyectos/crear" component={ProjectForm} /> 
+              <Route exact path={routes.home} component={HomeComponent} /> 
+              <Route exact path={routes.project} component={ProjectList} /> 
+              <Route path={routes.projectCreate} component={ProjectForm} /> 
+              <Route path={routes.projectEdit} component={ProjectForm} /> 
             </div>
             <Footer copyrights="copy 2015 Copyright Text"
               moreLinks={

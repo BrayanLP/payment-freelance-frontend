@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Table from 'react-materialize/lib/Table'; 
 import Icon from 'react-materialize/lib/Icon';
+import routes from '../../routes';
 
 import Pagination from 'react-materialize/lib/Pagination';
 import PropTypes from 'prop-types';
@@ -11,6 +12,7 @@ import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
 import { firebase } from '../../firebase/';
+
 class ProjectList extends Component {
     constructor(props){
         super(props)
@@ -31,7 +33,7 @@ class ProjectList extends Component {
                 <h2>
                     Listado Proyecto
                 </h2>
-                <Link className={`btn waves-effect waves-light`} to={'proyectos/crear'}>Crear</Link>
+                <Link className={`btn waves-effect waves-light`} to={routes.projectCreate}>Crear</Link>
                 <Table striped={true}>
                 <thead>
                 <tr>
@@ -42,24 +44,22 @@ class ProjectList extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                {projects && projects.map((res, index) => {
+                {projects && projects.length > 0 && projects.map((res, index) => {
                     return (
                     <tr key={index + 1}>
                         <td>{index + 1}</td>
                         <td>{res.name}</td>
                         <td>{`S/ ${res.price - res.adelanto}.00`}</td>
-                        <td>
-                        {/* <Icon>visibility</Icon> */}
-                        <Link to={`${res.id}/edit`}><Icon>create</Icon></Link>
-                        <a href="#!" onClick={(e) => this.handleDelete(res.id)}><Icon>delete</Icon></a>
-                        {/* <Link onClick={this.handleDelete(res.id)}><Icon>delete</Icon></Link> */}
+                        <td> 
+                        <Link to={routes.compile(routes.projectEdit, {id: res.id})}><Icon>create</Icon></Link>
+                        <a href="#!" onClick={(e) => this.handleDelete(res.id)}><Icon>delete</Icon></a> 
                         </td>
                     </tr>
                     )
                 })
                 }
                 </tbody>
-            </Table>
+            </Table> 
             <Pagination items={10} activePage={2} maxButtons={8} />
             </div>
         );
