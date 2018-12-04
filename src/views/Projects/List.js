@@ -7,7 +7,7 @@ import Pagination from 'react-materialize/lib/Pagination';
 import PropTypes from 'prop-types';
 
 // import compose from 'recompose/compose';
-import Button from 'react-materialize/lib/Button';
+// import Button from 'react-materialize/lib/Button';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
@@ -33,7 +33,7 @@ class ProjectList extends Component {
                 <h2>
                     Listado Proyecto
                 </h2>
-                <Link className={`btn waves-effect waves-light`} to={routes.projectCreate}>Crear</Link>
+                <Link className={`btn waves-effect waves-light`} to={routes.createProject}>Crear</Link>
                 <Table striped={true}>
                 <thead>
                 <tr>
@@ -49,9 +49,9 @@ class ProjectList extends Component {
                     <tr key={index + 1}>
                         <td>{index + 1}</td>
                         <td>{res.name}</td>
-                        <td>{`S/ ${res.price - res.adelanto}.00`}</td>
+                        <td>{`S/ ${res.price - (res.price * (res.adelanto / 100))}.00`}</td>
                         <td> 
-                        <Link to={routes.compile(routes.projectEdit, {id: res.id})}><Icon>create</Icon></Link>
+                        <Link to={routes.compile(routes.editProject, {id: res.id})}><Icon>create</Icon></Link>
                         <a href="#!" onClick={(e) => this.handleDelete(res.id)}><Icon>delete</Icon></a> 
                         </td>
                     </tr>

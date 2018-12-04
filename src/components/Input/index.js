@@ -12,13 +12,13 @@ import { ValidatorComponent } from 'react-form-validator-core';
 class InputValidator extends ValidatorComponent {
  
     render() {
-        const { errorMessages, validators, requiredError, validatorListener, type, ...rest } = this.props;
-        console.log(type)
+        const { errorMessages, validators, requiredError, validatorListener, ...rest } = this.props;
+        // console.log(type)
         return (
             <React.Fragment>
                 <Input
                     {...rest}
-                    type={type ? type: 'text'}
+                    // type={type}
                     ref={(r) => { this.input = r; }}
                     children={
                         this.errorText()
@@ -30,7 +30,7 @@ class InputValidator extends ValidatorComponent {
  
     errorText() {
         const { isValid } = this.state;
-        console.log(this.state)
+        // console.log(this.state)
         if (isValid) {
             return null;
         }

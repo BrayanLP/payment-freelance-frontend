@@ -1,6 +1,10 @@
 import { db } from '../../firebase/firebase';
 export default {
-    state: {},
+    state: {
+        edit: {
+            name : ''
+        }
+    },
     reducers: {
         list: (state, payload, arr) => {
             return {
@@ -8,7 +12,14 @@ export default {
               [arr]: payload,
             //   [arr + 'Pag']: payload.metadata
             };
-          }
+        },
+        obj: (state, payload, arr) => {
+            return {
+              ...state,
+              [arr]: payload,
+            //   [arr + 'Pag']: payload.metadata
+            };
+        },
       
     },
     effects: dispatch => ({
@@ -42,7 +53,19 @@ export default {
         //         dispatch.messageModel.message(res);
         //         dispatch.loadingModel.loadingData(false);
         //       });
-          }
+          },
+        async fetchDataId(id){
+            db.ref(`proyectos/${id}`).on('value', (snapshot ) => { 
+                const data = snapshot.val()
+                data['start_date'] = new Date(data.start_date)
+                data['end_date'] = new Date(data.end_date)
+                data['deposit_date'] = new Date(data.deposit_date)
+                data['cotizacion_date'] = new Date(data.cotizacion_date)
+                
+                console.log(data)
+                this.list(data, 'editProject')
+            })
+        }
       
     })
 }

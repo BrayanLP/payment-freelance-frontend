@@ -1,9 +1,9 @@
 import React from 'react';
-import Input from 'react-materialize/lib/Input';
+// import Input from 'react-materialize/lib/Input';
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-
+import './DatePicker.css';
 import { ValidatorComponent } from 'react-form-validator-core';
     const style ={
         color: 'red',
@@ -14,37 +14,26 @@ import { ValidatorComponent } from 'react-form-validator-core';
         left: '0'
     }
 class DateValidator extends ValidatorComponent {
-    // this.state = {}
-    // componentDidMount(){
-        // const { selected } = this.props
-        // // console.log(selected)
-        // this.setState({
-        //     value : selected
-        // })
-    // }
-    handleChange(date,name) {
-        // const other = this.state
-        const selected = this.props
-        console.log(date, name, selected)
+ 
+    handleChange(date,name) { 
         this.setState({
-          [name]: date,
-          value: '12-12-12' 
+          [name]: date 
         });
-        console.log(this.state)
-      }
+        // console.log(this.state)
+    } 
 
     render() {
-        const { errorMessages, validators, requiredError, validatorListener, label,selected, name, ...rest } = this.props; 
-        // console.log(this.props)
+        const { errorMessages, validators, requiredError, validatorListener, value, selected, label, name, ...rest } = this.props; 
+        // console.log(this.props) 
         return (
             <React.Fragment>  
                 <div className="col input-field s6">
                     <DatePicker
                         {...rest } 
-                        ref={(r) => { this.input = r; }}
-                        value={selected}
-                        selected={this.state[name]}
-                        onChange={(e) => this.handleChange(e, name)} 
+                        // ref={(r) => { this.input = r; }}
+                        // value={selected}
+                        selected={selected}
+                        // onChange={(e) => this.handleChange(e, name)} 
                     />
                     <label className="active"> {label}</label>
                     {this.errorText()}
@@ -54,12 +43,7 @@ class DateValidator extends ValidatorComponent {
     }
  
     errorText() {
-        const { isValid } = this.state;
-        // const { selected } = this.props;
-        // this.setState({
-        //     value : selected
-        // })
-        console.log(this.state)
+        const { isValid } = this.state; 
         if (isValid) {
             return null;
         }
