@@ -1,25 +1,32 @@
-import React, { Component } from 'react'; 
+import React, { Component, lazy } from 'react'; 
 import './App.css'; 
 
 // import Footer from 'react-materialize/lib/Footer';
 import Navbar from 'react-materialize/lib/Navbar';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 // import NavItem from 'react-materialize/lib/NavItem';
 // import config from './config.json';
 // import * as firebase from 'firebase';
 import firebase from 'firebase/app';
 import { authFunctions } from './firebase';
 import {auth} from './firebase/firebase';
-import {
-  ProjectList,
-  ProjectForm,
-  EditProject
-}from './views/Projects/'; 
-// firebase.initializeApp(config)
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import HomeComponent from './views/Home';
+// import {
+//   ProjectList,
+//   ProjectForm,
+//   EditProject
+// }from './views/Projects/'; 
+// import HomeComponent from './views/Home';
 import routes from './routes';
+const HomeComponent = lazy(() => import('./views/Home'));
+const ProjectList = lazy(()=> import('./views/Projects/List'));
+const ProjectForm = lazy(()=> import('./views/Projects/Form'));
+const EditProject = lazy(()=> import('./views/Projects/Edit'));
+// const { ProjectList,ProjectForm, EditProject } = lazy(()=> import('./views/Projects/index'));
+
+// firebase.initializeApp(config)
 
 
+console.log(HomeComponent)
 class App extends Component {
   constructor(){
     super();
